@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Onboarding Agent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1>Teacher Onboarding Agent</h1>
+    <p>Pick a grade level and subject to generate a customized onboarding guide.</p>
+  </header>
+
+  <main>
+    <form id="generator-form" class="generator-form">
+      <div class="field">
+        <label for="grade-select">Grade level</label>
+        <select id="grade-select" required>
+          <option value="" disabled selected>Select grade</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="subject-select">Subject</label>
+        <select id="subject-select" required>
+          <option value="" disabled selected>Select subject</option>
+        </select>
+      </div>
+
+      <button type="submit">Generate Onboarding Guide</button>
+    </form>
+
+    <button id="print-btn" class="print-btn hidden">Print / Save as PDF</button>
+
+    <div id="guide-output" class="guide-output hidden"></div>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
