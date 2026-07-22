@@ -2,11 +2,11 @@
    app.js
    UI wiring + guide generation for the Teacher Onboarding Agent.
 
-   The four sections of a generated guide:
-     1. Pacing Suggestions   -> grade+subject specific, from data.js
-     2. Vera Cross Walkthrough -> same for every teacher
-     3. First-Week Checklist   -> same for every teacher
-     4. Atlas Curriculum Maps  -> same for every teacher
+   Four entry paths from the choice screen, each its own destination:
+     Standards          -> grade/subject picker -> pacing suggestions
+     Veracross           -> platform walkthrough
+     First-Week Checklist -> same for every teacher
+     Atlas Curriculum Maps -> same for every teacher
 ------------------------------------------------------------------- */
 
 const VERA_CROSS_STEPS = [
@@ -44,22 +44,68 @@ const FIRST_WEEK_CHECKLIST = [
   "Set up your classroom management system and communicate it to families in your first note home",
 ];
 
-const ATLAS_STEPS = [
+const ATLAS_SECTIONS = [
   {
-    title: "What Atlas is",
-    detail: "Atlas is where our curriculum maps live — the scope & sequence, essential questions, assessments, and standards alignment for every grade and subject.",
+    heading: "Unit Planning",
+    intro: "Customized for your curriculum journey - built to support backward design or a content-first approach, with templates that evolve as your process does.",
+    bullets: [
+      "Browse your whole school and district curriculum in one click, filtered by grade, subject, or course. \"Map Type\" lets the school manage different design types for the same course.",
+      "Course at a Glance shows your Unit Calendar for the year - slide the unit-length bar to adjust duration.",
+      "Personalize your Atlas landing page with drag-and-drop panels and dashboards built around what you use most.",
+      "Global Search finds any keyword across your entire written curriculum - standards, units, resources - with pie/bar charts showing where a concept is addressed, and filters to narrow results.",
+      "Standards Alignment draws from the most comprehensive standards collection in the industry, with a searchable, drill-able menu, and tracks what's been targeted and assessed, and how often.",
+      "Track Learning Goals - SLOs, 21st Century skills, life and career skills - with icons marking essential vs. supporting standards, built right into the unit planner.",
+      "Assessment Planning lets the school customize its assessment method list, see how methods are used by grade/subject via charts, and snapshot reports to track changes over time.",
+    ],
   },
   {
-    title: "Find your map",
-    detail: "Log in to Atlas and filter by your grade level and subject to pull up the current curriculum map. This is your primary planning reference, not the pacing suggestions below — those are a starting point, Atlas is the source of truth.",
+    heading: "Lesson Planning",
+    intro: "Bridges the gap between planning and practice.",
+    bullets: [
+      "See how different teachers implement the same unit plan in their own classrooms.",
+      "Manage your own lesson templates, or use a uniform template the school has built for everyone.",
+      "Select target standards straight from the unit and attach resources to each lesson.",
+      "Send lesson plans from Atlas directly to Google Classroom to share with students.",
+    ],
   },
   {
-    title: "Compare to the pacing suggestions",
-    detail: "Cross-check the pacing suggestions in this guide against your Atlas map. If they differ, follow Atlas and flag the difference to your team lead so this guide can be corrected.",
+    heading: "Analytics",
+    intro: "Turns curriculum data into actionable insight.",
+    bullets: [
+      "Curriculum Insights Report - AI-generated analysis of alignment gaps, coverage patterns, and recommendations to strengthen curriculum coherence.",
+      "Standards and Assessments Analysis - see where standards are taught and assessed across grade levels, and run reports for gaps, redundancies, scope and sequence, and interdisciplinary connections.",
+      "Vertical and Horizontal Scope and Sequence - build documents across grades in one discipline, or across disciplines in one grade, to spot cross-disciplinary opportunities and repeated or missing content.",
+      "Comparative Unit Calendar - view multiple courses' calendars at once and compare unit details side by side.",
+      "Comments & Discussions - leave yourself a note while writing curriculum, post for others to add resources or feedback, or start a discussion about a course, unit, or report.",
+    ],
   },
   {
-    title: "Contribute back",
-    detail: "As you teach the year, you can suggest edits directly in Atlas (pacing tweaks, resource links, notes for next year) — it's a living document maintained by the team, not a static PDF.",
+    heading: "Integrations",
+    intro: "Connects to the tools our school already uses.",
+    bullets: [
+      "Single Sign-On through Google, Office 365, Clever, or our school's ADFS account.",
+      "ManageBac - browse and edit Atlas alongside ManageBac Classes, and extend units into the ManageBac stream with assessment tasks and resources.",
+      "Google Suite for Education - pick files straight from Google Drive, and push lessons from Atlas to Google Classroom.",
+      "LTI Integration with Canvas, Schoology, and other LTI-ready platforms.",
+      "OneRoster Ready - syncs with our student information system through Classlink, or direct OneRoster import.",
+    ],
+  },
+  {
+    heading: "Atlas AI",
+    intro: "AI support for building unit content from your standards and goals.",
+    bullets: [
+      "Generates a starting point using your unit name, course, grade, and aligned standards.",
+      "Customizable output - ask for student-friendly language, another language, or added context.",
+      "Full transparency: Atlas marks content whenever AI was used to help create it.",
+    ],
+  },
+  {
+    heading: "FariaLearn",
+    intro: "Atlas's on-demand, asynchronous professional development platform.",
+    bullets: [
+      "Self-paced courses on Atlas how-tos, unit development, and student engagement.",
+      "Earn a certificate of completion for each course, or get the full FariaLearn Bundle.",
+    ],
   },
 ];
 
@@ -119,7 +165,7 @@ function renderPacing(grade, subjectKey) {
 
   return `
     <section class="guide-section">
-      <h2>1. Pacing Suggestions — Grade ${grade} ${subjectMeta.label}</h2>
+      <h2>Pacing Suggestions — Grade ${grade} ${subjectMeta.label}</h2>
       <p class="standard-tag">${subjectMeta.standard}</p>
       <p class="focus">${pacing.focus}</p>
       <div class="quarters">${quartersHtml}</div>
@@ -138,7 +184,7 @@ function renderVeraCross() {
 
   return `
     <section class="guide-section">
-      <h2>2. Platform Walkthrough — Veracross</h2>
+      <h2>Platform Walkthrough — Veracross</h2>
       <p class="focus">Veracross is our system of record for grades and attendance. Complete each step below before your first full day.</p>
       <ol class="steps">${stepsHtml}</ol>
     </section>`;
@@ -151,26 +197,27 @@ function renderChecklist() {
 
   return `
     <section class="guide-section">
-      <h2>3. First-Week Checklist</h2>
+      <h2>First-Week Checklist</h2>
       <p class="focus">Work through this before school starts. Check items off as you go — this guide is printable/exportable.</p>
       <ul class="checklist">${itemsHtml}</ul>
     </section>`;
 }
 
 function renderAtlas() {
-  const stepsHtml = ATLAS_STEPS.map(
-    (s, i) => `
-      <li>
-        <strong>${i + 1}. ${s.title}</strong>
-        <p>${s.detail}</p>
-      </li>`
+  const groupsHtml = ATLAS_SECTIONS.map(
+    (group) => `
+      <div class="atlas-group">
+        <h3>${group.heading}</h3>
+        <p class="group-intro">${group.intro}</p>
+        <ul>${group.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
+      </div>`
   ).join("");
 
   return `
     <section class="guide-section">
-      <h2>4. Curriculum Maps — Atlas</h2>
-      <p class="focus">Atlas holds our official curriculum maps. Use it alongside — not instead of — this guide.</p>
-      <ol class="steps">${stepsHtml}</ol>
+      <h2>Curriculum Maps — Atlas</h2>
+      <p class="focus">Atlas holds our official curriculum maps. Use it alongside — not instead of — this guide. Here's what it can do.</p>
+      ${groupsHtml}
     </section>`;
 }
 
@@ -182,13 +229,7 @@ function generateGuide(grade, subjectKey) {
       <p>Grade ${grade} &middot; ${subjectMeta.label}</p>
     </div>`;
 
-  return (
-    header +
-    renderPacing(grade, subjectKey) +
-    renderVeraCross() +
-    renderChecklist() +
-    renderAtlas()
-  );
+  return header + renderPacing(grade, subjectKey);
 }
 
 function populateSelectors() {
@@ -210,12 +251,74 @@ function populateSelectors() {
   });
 }
 
+function renderStandalone(title, subtitle, bodyHtml) {
+  return `
+    <div class="guide-header">
+      <h1>${title}</h1>
+      <p>${subtitle}</p>
+    </div>
+    ${bodyHtml}`;
+}
+
+function showChoiceScreen() {
+  document.getElementById("choice-screen").classList.remove("hidden");
+  document.getElementById("back-link").classList.add("hidden");
+  document.getElementById("generator-form").classList.add("hidden");
+  document.getElementById("guide-output").classList.add("hidden");
+  document.getElementById("print-btn").classList.add("hidden");
+}
+
+function showCurriculumPath() {
+  document.getElementById("choice-screen").classList.add("hidden");
+  document.getElementById("back-link").classList.remove("hidden");
+  document.getElementById("generator-form").classList.remove("hidden");
+  document.getElementById("guide-output").classList.add("hidden");
+  document.getElementById("print-btn").classList.add("hidden");
+}
+
+function showStandalonePath(title, subtitle, bodyHtml) {
+  const output = document.getElementById("guide-output");
+  const printBtn = document.getElementById("print-btn");
+
+  document.getElementById("choice-screen").classList.add("hidden");
+  document.getElementById("back-link").classList.remove("hidden");
+  document.getElementById("generator-form").classList.add("hidden");
+
+  output.innerHTML = renderStandalone(title, subtitle, bodyHtml);
+  output.classList.remove("hidden");
+  printBtn.classList.remove("hidden");
+  output.scrollIntoView({ behavior: "smooth" });
+}
+
+function showVeraCrossPath() {
+  showStandalonePath("Veracross Walkthrough", "Logging in, attendance, and grades", renderVeraCross());
+}
+
+function showChecklistPath() {
+  showStandalonePath("First-Week Checklist", "Confirm these before school starts", renderChecklist());
+}
+
+function showAtlasPath() {
+  showStandalonePath("Atlas Curriculum Maps", "Find and use the team's official curriculum maps", renderAtlas());
+}
+
 function init() {
   populateSelectors();
 
   const form = document.getElementById("generator-form");
   const output = document.getElementById("guide-output");
   const printBtn = document.getElementById("print-btn");
+  const backLink = document.getElementById("back-link");
+
+  document.getElementById("choice-curriculum").addEventListener("click", showCurriculumPath);
+  document.getElementById("choice-veracross").addEventListener("click", showVeraCrossPath);
+  document.getElementById("choice-checklist").addEventListener("click", showChecklistPath);
+  document.getElementById("choice-atlas").addEventListener("click", showAtlasPath);
+
+  backLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    showChoiceScreen();
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();

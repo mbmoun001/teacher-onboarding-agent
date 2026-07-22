@@ -13,7 +13,35 @@
   </header>
 
   <main>
-    <form id="generator-form" class="generator-form">
+    <section id="choice-screen" class="choice-screen">
+      <h2>What do you want to explore?</h2>
+      <div class="choice-grid">
+        <button type="button" class="choice-card" id="choice-curriculum">
+          <span class="choice-icon" aria-hidden="true">📚</span>
+          <span class="choice-label">Standards</span>
+          <span class="choice-desc">Pacing suggestions by grade and subject, linked to the official standards.</span>
+        </button>
+        <button type="button" class="choice-card" id="choice-veracross">
+          <span class="choice-icon" aria-hidden="true">💻</span>
+          <span class="choice-label">Veracross</span>
+          <span class="choice-desc">Step-by-step guide to logging in, attendance, and grades.</span>
+        </button>
+        <button type="button" class="choice-card" id="choice-checklist">
+          <span class="choice-icon" aria-hidden="true">✅</span>
+          <span class="choice-label">First-Week Checklist</span>
+          <span class="choice-desc">The concrete things to confirm before school starts.</span>
+        </button>
+        <button type="button" class="choice-card" id="choice-atlas">
+          <span class="choice-icon" aria-hidden="true">🗺️</span>
+          <span class="choice-label">Atlas Curriculum Maps</span>
+          <span class="choice-desc">How to find and use the team's official curriculum maps.</span>
+        </button>
+      </div>
+    </section>
+
+    <a href="#" id="back-link" class="back-link hidden">&larr; Back to start</a>
+
+    <form id="generator-form" class="generator-form hidden">
       <div class="field">
         <label for="grade-select">Grade level</label>
         <select id="grade-select" required>

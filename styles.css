@@ -41,6 +41,77 @@ main {
   padding: 32px 20px 80px;
 }
 
+.choice-screen h2 {
+  text-align: center;
+  color: var(--navy);
+  margin: 0 0 20px;
+  font-size: 1.3rem;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 520px) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.choice-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 20px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+  color: var(--text);
+}
+
+.choice-card:hover,
+.choice-card:focus-visible {
+  border-color: var(--teal);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -12px rgba(31, 45, 77, 0.35);
+  outline: none;
+}
+
+.choice-icon {
+  font-size: 2.4rem;
+}
+
+.choice-label {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+
+.choice-desc {
+  color: #6b7280;
+  font-size: 0.88rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--teal);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
 .generator-form {
   display: flex;
   flex-wrap: wrap;
@@ -145,6 +216,40 @@ button {
   margin-bottom: 4px;
 }
 
+.atlas-group {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.atlas-group:first-of-type {
+  margin-top: 16px;
+  padding-top: 0;
+  border-top: none;
+}
+
+.atlas-group h3 {
+  color: var(--navy);
+  font-size: 1.02rem;
+  margin: 0 0 4px;
+}
+
+.atlas-group .group-intro {
+  color: #4b5563;
+  font-style: italic;
+  margin: 0 0 10px;
+}
+
+.atlas-group ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.atlas-group ul li {
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
 .standard-tag {
   display: inline-block;
   background: #eaf5f4;
@@ -246,6 +351,8 @@ button {
 
 @media print {
   .page-header,
+  .choice-screen,
+  .back-link,
   .generator-form,
   .print-btn {
     display: none !important;
